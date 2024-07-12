@@ -7,7 +7,7 @@ mapboxgl.accessToken = mapToken;
         zoom: 9 // starting zoom
 });
 
-const marker1 = new mapboxgl.Marker({ color: '#fe424d'})
+const marker1 = new mapboxgl.Marker({ color: '#1E3A8A'})
     .setLngLat(listing.geometry.coordinates)
     .setPopup(new mapboxgl.Popup({offset:25})
     .setHTML(`<h4>${listing.title}</h4><p>Exact location will be provided after booking</p>`))

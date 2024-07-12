@@ -1,65 +1,58 @@
 <% layout("/layouts/boilerplate")%>
   <body>
   
-    <div id="filters">
-    <div class="filter">
+    <div id="filters" class="scrolling-wrapper row flex-row flex-nowrap">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
     </div>
-    <div class="filter">
-    <div><i class="fa-solid fa-bed"></i></div>
-    <p>Rooms</p>
-    </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-umbrella-beach"></i></div>
     <p>Beach</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-mountain-sun"></i></div>
     <p>Mountains</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-person-swimming"></i></div>
-    <p>Amazing Pools</p>
+    <p>Pools</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-regular fa-snowflake"></i></div>
-    <p>Arctic</p>
+    <p>Snow</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-brands fa-fort-awesome"></i></div>
     <p>Castles</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-city"></i></div>
     <p>Cities</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-landmark"></i></div>
     <p>Historical</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-tractor"></i></div>
     <p>Farm</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-igloo"></i></div>
     <p>Domes</p>
     </div>
-    <div class="filter">
+    <div class="filter col-1">
     <div><i class="fa-solid fa-sailboat"></i></div>
     <p>Surfing</p>
     </div>
-    <div class="tax-toggle">
-    <div class="form-check-reverse form-switch">
-  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-  <label class="form-check-label" for="flexSwitchCheckDefault">Price after tax</label>
-     </div>
+     
+    
   </div>
     
-    </div>
+   
     
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <div class=" row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <% for(let listing of allListings) { %>
     <a href="/listings/<%=listing._id%>" class="listing-link">
     <div class="card col listing-card">
@@ -67,9 +60,9 @@
         <div class="card-img-overlay"></div>
         <div class="card-body">
           <p class="card-text"> 
-           <b><%= listing.title %></b> <br>
-           &#8377;<%= listing.price.toLocaleString("en-IN")%>/night
-           <i class="tax-info"> &nbsp;&nbsp; +18% GST</i>
+           <b><%= listing.title %></b> ,<%= listing.location %><br>
+           &#8377;<%= listing.price.toLocaleString("en-IN")%>/night <br>
+           <%=listing.category%>
           </p>
         </div>
       </div>
@@ -78,18 +71,69 @@
     </div>
     
 <script>
-let taxswitch=document.getElementById("flexSwitchCheckDefault");
-taxswitch.addEventListener("click",()=> {
-  let taxInfo=document.getElementsByClassName("tax-info");
-  for(info of taxInfo){
-    if(info.style.display !="inline"){
-      info.style.display ="inline";
+
+let filternew = document.getElementsByClassName("filter col-1");
+let card = document.getElementsByClassName("card-text");
+
+for (let i = 0; i < card.length; i++) {
+    let parent=card[i].parentElement.parentElement.parentElement;
+    
+    <!-- console.log(parent.parentElement.parentElement) -->
+    let arr = card[i].innerText.split("\n");
+    
+
+    // Adding event listener inside loop for each card element
+    for (let j = 0; j < filternew.length; j++) {
+        filternew[j].addEventListener("click", function() {
+            let filterText = filternew[j].innerText.trim();
+            if (filterText === arr[2]) {
+                parent.style.display="inline";
+            } 
+            else {
+                parent.style.display="none";
+            }
+        });
     }
-    else{
-      info.style.display ="none";
-    }
-  }
-});
+}
+
+
 </script>
     
+<script>
+  
+  let form = document.getElementsByClassName('d-flex')[0]; // Assuming there's only one form
+  let card_data = document.getElementsByClassName("card-text");
+  function resetCardDisplay() {
+    for (let i = 0; i < card_data.length; i++) {
+      let parent = card_data[i].parentElement.parentElement.parentElement;
+      parent.style.display = "block";
+    }
+  }
+  
+  // Initial display of all cards
+  resetCardDisplay();
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    let val = event.target[0].value.toLowerCase(); // Get the input value and convert to lowercase for case-insensitive comparison
+    resetCardDisplay();
+    // Loop through each card element
+    for (let i = 0; i < card_data.length; i++) {
+      let arr1 = card_data[i].innerText.split("\n");
+      let arr=arr1[0].split(",");
+      let parent=card_data[i].parentElement.parentElement.parentElement;
+      
+      let location=arr[1];
+      
+      if (location && location.toLowerCase() === val) {
+        parent.style.display = "block"; // Display the card
+      } else {
+        parent.style.display = "none"; // Hide the card
+      }
+    }
+    event.target.reset();
+    
+  });
+</script>
+
+
   </body>
