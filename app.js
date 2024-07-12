@@ -48,10 +48,10 @@ main()
 });
 
 async function main(){
-    await mongoose.connect(dburl)
+    await mongoose.connect(MONGO_URL)
 }
 const store=MongoStore.create({
-    mongoUrl:dburl,
+    mongoUrl:MONGO_URL,
     crypto:{
         secret:process.env.SECRET
     },
