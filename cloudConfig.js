@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-      folder: 'wanderlust-dev',
+      folder: 'EcoLiving-img',
       allowedFormats: ['jpeg', 'png','jpg']
     },
   });
