@@ -13,9 +13,17 @@ body{
     background-color:#e2f7e5;
 }
 @media(max-width:767.9px){
-    .navbar-nav{
-        height: 8rem;
+    #navbarNavAltMarkup {
+         padding: 1rem;
+         background-color:#e2f7e5 ;
+         border-radius: 25px;
+         margin-top: 1rem;
+         border: 2px double #288f4e;
+    }
+    .ms-auto{
+        height: 6.5rem;
         background-color: #e2f7e5;
+        padding-bottom: 0.5rem;
     }
 }
 .fa-house{
